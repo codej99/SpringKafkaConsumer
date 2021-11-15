@@ -1,3 +1,8 @@
+logging:
+  level:
+    org.springframework: WARN
+    com.spring.kafka: DEBUG
+# spring-kafka configuration
 #spring:
 #  kafka:
 #    bootstrap-servers: localhost:9093,localhost:9094,localhost:9095
@@ -12,7 +17,7 @@
 
 spring:
   kafka:
-    bootstrap-servers: localhost:9092,localhost:9094,localhost:9095
+    bootstrap-servers: localhost:9093,localhost:9094,localhost:9095
     consumer:
       group-id: consumer-group-1
       auto-offset-reset: earliest
@@ -23,3 +28,31 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+# spring-cloud-stream configuration
+  cloud.stream:
+    bindings:
+      domainEventString-in-0:
+        content-type: text/plain
+        destination: domain-event-string
+        group: consumer-group-string
+      domainEventString-out-0:
+        destination: domain-event-string
+        group: consumer-group-string
+      domainEventModel-in-0:
+        destination: domain-event-model
+        group: consumer-group-model
+      domainEventModel-out-0:
+        destination: domain-event-model
+        group: consumer-group-model
+    kafka:
+      binder:
+        brokers: localhost:9093,localhost:9094,localhost:9095
+        configuration:
+          auto.offset.reset: earliest
+          key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+          value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  cloud:
+    stream:
+      function:
+        definition: domainEventString;domainEventModel
