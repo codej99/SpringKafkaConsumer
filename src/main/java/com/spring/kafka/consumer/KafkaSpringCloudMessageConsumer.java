@@ -21,6 +21,8 @@ public class KafkaSpringCloudMessageConsumer {
     Consumer<User> domainEventModel() {
         return input -> {
             System.out.println("Received Message : " + input);
+            // 재시도 테스트를 위해 예외 처리 추가
+            throw new UnknownError("unexpected error");
         };
     }
 }

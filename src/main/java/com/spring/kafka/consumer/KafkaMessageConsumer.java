@@ -17,9 +17,11 @@ public class KafkaMessageConsumer {
         log.debug("Received Payloads : " + message);
     }
 
-    @KafkaListener(topics = "domain-event-user")
+    @KafkaListener(topics = "domain-event-user", containerFactory = "kafkaListenerContainerFactory")
     public void listenDomainEvent(@Headers MessageHeaders headers, @Payload User user) {
         log.debug("Received Headers : " + headers);
         log.debug("Received Payloads : " + user.toString());
+        // 재시도 테스트를 위해 예외 처리 추가
+        throw new UnknownError("unexpected error");
     }
 }

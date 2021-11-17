@@ -24,7 +24,7 @@ public class MessageSendController {
     }
 
     /*
-    curl --location --request POST 'http://localhost:8080/send-message' \
+    curl --location --request POST 'http://localhost:8080/send-message-user' \
     --header 'Content-Type: application/json' \
     --data-raw '{
         "id": "happydaddy@naver.com",
